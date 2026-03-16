@@ -24,6 +24,27 @@ export default function VideoBackdrop({
     }
   }, [isPlaying, src, videoRef]);
 
+  useEffect(() => {
+    const el = videoRef?.current;
+    if (!el) return;
+
+    // Retry playback when browser/network stalls to keep background smooth.
+    const resume = () => {
+      const p = el.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    };
+
+    el.addEventListener("stalled", resume);
+    el.addEventListener("waiting", resume);
+    el.addEventListener("canplay", resume);
+
+    return () => {
+      el.removeEventListener("stalled", resume);
+      el.removeEventListener("waiting", resume);
+      el.removeEventListener("canplay", resume);
+    };
+  }, [videoRef, src]);
+
   return (
     <div className={`video-backdrop ${className}`} aria-hidden="true">
       {!failed ? (
@@ -34,7 +55,8 @@ export default function VideoBackdrop({
           muted={muted}
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
+          crossOrigin="anonymous"
           poster={resolvedPoster}
           onError={() => setFailed(true)}
         >
