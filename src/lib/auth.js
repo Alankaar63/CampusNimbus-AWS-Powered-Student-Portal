@@ -47,11 +47,16 @@ export function getUserContext() {
 }
 
 export function getLoginUrl() {
+  const runtimeRedirectUri =
+    window.location.hostname.endsWith("onrender.com")
+      ? `${window.location.origin}/callback`
+      : APP_CONFIG.redirectUri;
+
   const params = new URLSearchParams({
     client_id: APP_CONFIG.clientId,
     response_type: "code",
     scope: "openid email",
-    redirect_uri: APP_CONFIG.redirectUri,
+    redirect_uri: runtimeRedirectUri,
   });
 
   return `${APP_CONFIG.cognitoDomain}/login?${params.toString()}`;
