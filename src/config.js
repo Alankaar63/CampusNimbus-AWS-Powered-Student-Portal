@@ -20,14 +20,14 @@ export const APP_CONFIG = {
 export const MEDIA_CONFIG = {
   heroVideoUrl:
     import.meta.env.VITE_HERO_VIDEO_URL ||
-    "https://s3-entc-student-data-bucket.s3.ap-south-1.amazonaws.com/hero.mp4",
+    "https://campusnimbus-media-public.s3.ap-south-1.amazonaws.com/hero.mp4",
   portalVideoUrl:
     import.meta.env.VITE_PORTAL_VIDEO_URL ||
-    "https://s3-entc-student-data-bucket.s3.ap-south-1.amazonaws.com/portal.mp4",
+    "https://campusnimbus-media-public.s3.ap-south-1.amazonaws.com/portal.mp4",
   campusVideoUrl:
     import.meta.env.VITE_CAMPUS_VIDEO_URL ||
-    "https://s3-entc-student-data-bucket.s3.ap-south-1.amazonaws.com/siucampus.mp4",
+    "https://campusnimbus-media-public.s3.ap-south-1.amazonaws.com/siucampus.mp4",
   themeAudioUrl:
     import.meta.env.VITE_THEME_AUDIO_URL ||
-    "https://s3-entc-student-data-bucket.s3.ap-south-1.amazonaws.com/theme.mp3",
+    "https://campusnimbus-media-public.s3.ap-south-1.amazonaws.com/theme.mp3",
 };
