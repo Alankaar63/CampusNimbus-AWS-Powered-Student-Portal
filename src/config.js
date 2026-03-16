@@ -10,7 +10,7 @@ export const APP_CONFIG = {
     import.meta.env.VITE_COGNITO_CLIENT_ID || "3eao6ipnnnkndmuhrj0a494p45",
   redirectUri:
     import.meta.env.VITE_COGNITO_REDIRECT_URI ||
-    `${window.location.origin}${import.meta.env.BASE_URL}#/callback`,
+    `${window.location.origin}/callback`,
   apiBaseUrl: import.meta.env.DEV ? "/api" : configuredApiBaseUrl,
   apiBaseUrlConfigured: configuredApiBaseUrl,
   defaultReportBucket: import.meta.env.VITE_REPORT_BUCKET || "",

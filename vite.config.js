@@ -22,10 +22,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    base:
-      mode === "production"
-        ? "/CampusNimbus-AWS-Powered-Student-Portal/"
-        : "/",
+    base: "/",
     server: {
       proxy: {
         '/api': {

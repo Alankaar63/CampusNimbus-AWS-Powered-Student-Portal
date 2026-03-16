@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import AuthCallback from "./pages/AuthCallback";
 import ResultAccessPage from "./pages/ResultAccessPage";
@@ -13,7 +13,7 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BackgroundAudioProvider>
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/about-us" element={<AboutUsPage />} />
@@ -25,6 +25,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/student" element={<ResultAccessPage />} />
         <Route path="/admin" element={<ResultAccessPage />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   </BackgroundAudioProvider>,
 );
