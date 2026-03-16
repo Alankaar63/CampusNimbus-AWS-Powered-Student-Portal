@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import BackgroundAudioContext from "./backgroundAudioContextObject";
+import { MEDIA_CONFIG } from "../config";
 
 export function BackgroundAudioProvider({ children }) {
   const audioRef = useRef(null);
@@ -55,7 +56,7 @@ export function BackgroundAudioProvider({ children }) {
     <BackgroundAudioContext.Provider value={value}>
       {children}
       <audio ref={audioRef} loop preload="auto">
-        <source src="/media/theme.mp3" type="audio/mpeg" />
+        <source src={MEDIA_CONFIG.themeAudioUrl} type="audio/mpeg" />
       </audio>
     </BackgroundAudioContext.Provider>
   );

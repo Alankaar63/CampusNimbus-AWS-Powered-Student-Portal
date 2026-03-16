@@ -16,3 +16,10 @@ export const APP_CONFIG = {
   defaultReportBucket: import.meta.env.VITE_REPORT_BUCKET || "",
   defaultAwsRegion: import.meta.env.VITE_AWS_REGION || "ap-south-1",
 };
+
+export const MEDIA_CONFIG = {
+  heroVideoUrl: import.meta.env.VITE_HERO_VIDEO_URL || "/media/hero.mp4",
+  portalVideoUrl: import.meta.env.VITE_PORTAL_VIDEO_URL || "/media/portal.mp4",
+  campusVideoUrl: import.meta.env.VITE_CAMPUS_VIDEO_URL || "/media/siucampus.mp4",
+  themeAudioUrl: import.meta.env.VITE_THEME_AUDIO_URL || "/media/theme.mp3",
+};

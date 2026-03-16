@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import SiteHeader from "../components/site/SiteHeader";
 import VideoBackdrop from "../components/site/VideoBackdrop";
 import useBackgroundAudio from "../hooks/useBackgroundAudio";
+import { MEDIA_CONFIG } from "../config";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,7 +54,7 @@ export default function HomePage() {
   return (
     <div className="cinema-page">
       <VideoBackdrop
-        src="/media/hero.mp4"
+        src={MEDIA_CONFIG.heroVideoUrl}
         poster={null}
         isPlaying={videoPlaying}
         videoRef={videoRef}

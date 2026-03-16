@@ -2,13 +2,14 @@ import SiteHeader from "../components/site/SiteHeader";
 import VideoBackdrop from "../components/site/VideoBackdrop";
 import { getLoginUrl } from "../lib/auth";
 import useBackgroundAudio from "../hooks/useBackgroundAudio";
+import { MEDIA_CONFIG } from "../config";
 
 export default function SIUPortalPage() {
   const { musicOn, toggleMusic } = useBackgroundAudio();
 
   return (
     <div className="cinema-page">
-      <VideoBackdrop src="/media/portal.mp4" poster={null} />
+      <VideoBackdrop src={MEDIA_CONFIG.portalVideoUrl} poster={null} />
       <SiteHeader />
 
       <section className="content-shell portal-shell">
