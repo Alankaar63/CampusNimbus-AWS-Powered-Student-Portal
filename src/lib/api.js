@@ -121,7 +121,8 @@ function coerceToPublicS3Url(value) {
 
 export async function fetchStudentRecord(prn, token = "") {
   const authToken = token || getStoredTokens().accessToken;
-  if (!authToken) {
+  const sendAuthHeader = import.meta.env.VITE_SEND_AUTH_HEADER === "true";
+  if (sendAuthHeader && !authToken) {
     throw new Error("Missing access token. Please login again.");
   }
 
@@ -131,13 +132,16 @@ export async function fetchStudentRecord(prn, token = "") {
 
   let res;
   try {
+    const headers = {};
+    if (sendAuthHeader && authToken) {
+      headers.Authorization = `Bearer ${authToken}`;
+    }
+
     res = await fetch(
       `${APP_CONFIG.apiBaseUrl}/student?prn=${encodeURIComponent(prn)}`,
       {
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+        headers,
       },
     );
   } catch {
