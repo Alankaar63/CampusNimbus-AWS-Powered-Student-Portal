@@ -1,40 +1,41 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { APP_CONFIG } from "../config";
 
 export default function AuthCallback() {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const oauthError = params.get("error");
-    const oauthErrorDescription = params.get("error_description");
-    const code = params.get("code");
+    const run = async () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const oauthError = params.get("error");
+        const oauthErrorDescription = params.get("error_description");
+        const code = params.get("code");
 
-    if (oauthError) {
-      console.error("OAuth redirect error:", oauthError, oauthErrorDescription);
-      return;
-    }
+        if (oauthError) {
+          throw new Error(`${oauthError}: ${oauthErrorDescription || "Authentication redirect failed."}`);
+        }
 
-    if (!code) {
-      console.error("No auth code found in URL");
-      return;
-    }
+        if (!code) {
+          throw new Error("No authorization code found in callback URL.");
+        }
 
-    fetch(`${APP_CONFIG.cognitoDomain}/oauth2/token`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        grant_type: "authorization_code",
-        client_id: APP_CONFIG.clientId,
-        redirect_uri: APP_CONFIG.redirectUri,
-        code,
-      }),
-    })
-      .then(async (res) => {
+        const res = await fetch(`${APP_CONFIG.cognitoDomain}/oauth2/token`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            grant_type: "authorization_code",
+            client_id: APP_CONFIG.clientId,
+            redirect_uri: APP_CONFIG.redirectUri,
+            code,
+          }),
+        });
+
         const data = await res.json();
         if (!res.ok) {
           throw new Error(
@@ -61,16 +62,24 @@ export default function AuthCallback() {
         if (prn) localStorage.setItem("prn", prn);
 
         navigate("/result-access");
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error("OAuth error:", err);
-      });
+        setError(err.message || "OAuth token exchange failed.");
+      }
+    };
+
+    run();
   }, [navigate]);
 
   return (
     <div className="portal-scene callback-screen">
       <div className="animated-gradient" />
       <h1 className="callback-title">Signing you in...</h1>
+      {error ? (
+        <p className="error-text" style={{ position: "relative", zIndex: 4, marginTop: "1rem", maxWidth: "760px", textAlign: "center" }}>
+          {error} Current redirect URI: {APP_CONFIG.redirectUri}
+        </p>
+      ) : null}
     </div>
   );
 }
