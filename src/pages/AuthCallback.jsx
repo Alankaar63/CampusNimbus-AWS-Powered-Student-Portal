@@ -23,6 +23,15 @@ export default function AuthCallback() {
           throw new Error("No authorization code found in callback URL.");
         }
 
+        let runtimeRedirectUri = APP_CONFIG.redirectUri;
+        try {
+          runtimeRedirectUri =
+            sessionStorage.getItem("oauth_redirect_uri") ||
+            `${window.location.origin}/callback`;
+        } catch {
+          runtimeRedirectUri = `${window.location.origin}/callback`;
+        }
+
         const res = await fetch(`${APP_CONFIG.cognitoDomain}/oauth2/token`, {
           method: "POST",
           headers: {
@@ -31,7 +40,7 @@ export default function AuthCallback() {
           body: new URLSearchParams({
             grant_type: "authorization_code",
             client_id: APP_CONFIG.clientId,
-            redirect_uri: APP_CONFIG.redirectUri,
+            redirect_uri: runtimeRedirectUri,
             code,
           }),
         });

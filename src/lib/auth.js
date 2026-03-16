@@ -52,6 +52,12 @@ export function getLoginUrl() {
       ? `${window.location.origin}/callback`
       : APP_CONFIG.redirectUri;
 
+  try {
+    sessionStorage.setItem("oauth_redirect_uri", runtimeRedirectUri);
+  } catch {
+    // ignore storage errors
+  }
+
   const params = new URLSearchParams({
     client_id: APP_CONFIG.clientId,
     response_type: "code",
